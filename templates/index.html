@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/output.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Blogtune AI</title>
+</head>
+<body>
+
+    <nav class="bg-black text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="text-lg font-bold">
+                    <a href="#">Blogtune AI</a>
+                </div>
+                <div class="hidden md:flex space-x-4">
+                    <a href="#" class="hover:text-gray-400">Home</a>
+                    <a href="#" class="hover:text-gray-400">About</a>
+                    <a href="#" class="hover:text-gray-400">Services</a>
+                    <a href="#" class="hover:text-gray-400">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-button" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="menu" class="hidden md:hidden">
+            <a href="#" class="block text-center py-2 hover:bg-gray-700">Home</a>
+            <a href="#" class="block text-center py-2 hover:bg-gray-700">About</a>
+            <a href="#" class="block text-center py-2 hover:bg-gray-700">Services</a>
+            <a href="#" class="block text-center py-2 hover:bg-gray-700">Contact</a>
+        </div>
+    </nav>
+           <div class="container mx-auto my-4 px-4 md:px-0">
+            <h1 style="font-size: 24px; font-weight: bold; color: #333;">Enter the title of the blog :</h1>
+            <textarea class="border my-1 p-2 w-full" placeholder="Enter the title of your blog"></textarea>
+            <button id="submitBtn" class="bg-black text-white px-4 py-2 my-1 rounded">Submit</button>
+            <div id="content" class="bg-gray-200 p-2 my-4">Your content will show up here</div>
+        </div>
+
+
+    <script>
+
+        const menuButton = document.getElementById('menu-button');
+        const menu = document.getElementById('menu');
+
+        menuButton.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+        const populate = async () => {
+            let prompt = document.querySelector('textarea').value;
+            let response = await fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: prompt })
+            });
+          content.innerHTML = await response.text();
+        }
+       const submitBtn = document.querySelector('#submitBtn');
+            submitBtn.addEventListener('click', () => {
+                populate();
+            });
+
+    </script>
+</body>
+</html>
